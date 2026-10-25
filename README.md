@@ -49,7 +49,15 @@ data/hub/skills/example-skill/     ← 真身（唯一）
 
 ## 截图
 
-> 待补（用 demo 数据重拍）
+![主界面](docs/screenshots/01-overview.png)
+
+拖动卡片到左侧目标位置，会先说明「原位置的链接会被移除」，确认后才移动：
+
+![拖拽链接](docs/screenshots/02-drag-link.png)
+
+每次改动自动提交 git，可看历史、对比差异、回滚到任意版本：
+
+![历史](docs/screenshots/03-history.png)
 
 ---
 
