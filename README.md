@@ -174,11 +174,7 @@ python cli\skill.py rollback my-skill --commit 1a2b3c4d --yes
 
 ## 参与开发
 
-- 项目约定：[AGENTS.md](AGENTS.md)
-- 架构说明：[docs/架构说明.md](docs/架构说明.md)
-- 测试：`python -m unittest discover -s tests`（18 个用例，只读不写数据）
-
----
+欢迎提 Issue 和 PR。开发约定、环境配置和测试方法见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
 ## 许可证
 
