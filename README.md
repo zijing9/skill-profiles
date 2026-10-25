@@ -164,24 +164,6 @@ python cli\skill.py rollback my-skill --commit 1a2b3c4d --yes
 
 **agent 可以直接调用**：完整契约见 [cli/cli.spec.json](cli/cli.spec.json)，用法见 [cli/README.md](cli/README.md)。
 
----
-
-## 和同类项目的区别
-
-| 能力 | skill-profiles | [Skills-Manager](https://github.com/jiweiyeah/Skills-Manager) | [vercel-labs/skills](https://github.com/vercel-labs/skills) |
-|---|---|---|---|
-| 形态 | 桌面 GUI + CLI | 桌面 GUI + CLI | CLI |
-| 支持工具数 | 6 | 32 | 75+ |
-| git 版本历史 | ✅ | — | — |
-| 回收站 | ✅ | — | — |
-| 技能分身 | ✅ | — | — |
-| 内容安全审计 | ✅ | — | — |
-| 跨平台 | ❌ 仅 Windows | ✅ | ✅ |
-
-我们不比谁支持的工具多，比的是**一个技能在生命周期里的事**：改坏了怎么办、删错了怎么办、两份要不同版本怎么办。
-
----
-
 ## 已知限制
 
 - **仅 Windows**：依赖 NTFS 目录链接。跨平台需要改 `core/platform.py` 一个文件（链接操作已收敛），但没环境验证。
