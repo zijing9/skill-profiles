@@ -1,0 +1,24 @@
+{
+  "_说明": "复制成 data/config.json 后按需修改。字段全部可选，缺省值见注释。",
+
+  "theme": "black",
+  "_theme": "black | white | amber | violet",
+
+  "port": 8765,
+  "_port": "本地服务端口；也可用环境变量 SKILL_MANAGER_PORT 覆盖",
+
+  "workspaceParent": "D:\\Projects",
+  "_workspaceParent": "工作区父目录：自动扫描它下面含 .dsh/skills 的一级目录作为工作区",
+
+  "globalSkillsDir": "~/.dsh/skills",
+  "_globalSkillsDir": "全局技能目录。用 Claude Code 的话可改成 ~/.claude/skills",
+
+  "workspaces": [],
+  "_workspaces": "额外手动加入的工作区绝对路径列表；一般留空，靠自动发现即可",
+
+  "subGroups": [],
+  "_subGroups": "子分类（纯查看用），界面里新建即可，一般不用手改",
+
+  "skillGroups": {},
+  "_skillGroups": "技能到子分类的归属映射，界面里拖拽生成"
+}

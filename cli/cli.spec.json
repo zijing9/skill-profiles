@@ -1,0 +1,325 @@
+{
+  "name": "skill",
+  "version": "1.0.0",
+  "description": "技能仓库的命令行接口。默认输出 JSON 到 stdout；写操作需要 --yes；所有写操作支持 --dry-run。",
+  "entry": "python cli/skill.py <command> [args]",
+  "global_flags": {
+    "--output": "json | text | ndjson（默认 json）",
+    "--human": "等价于 --output text",
+    "--fields": "逗号分隔的字段名，只输出这些字段",
+    "--dry-run": "只校验和预览，不产生副作用",
+    "--yes": "写操作确认（不带则 exit 2）",
+    "--no-input": "禁止交互，缺参数直接报错",
+    "--json": "结构化输入：'<payload>' | @file | -（stdin）",
+    "--quiet": "抑制 stderr 的非错误输出",
+    "--verbose": "stderr 输出更多日志"
+  },
+  "exit_codes": {
+    "0": "成功",
+    "1": "未分类/内部错误",
+    "2": "用法错误：未知 flag、缺必填、类型不符、缺 --yes、名字不合法",
+    "20": "目标不存在（技能、回收站条目、位置、提交）",
+    "21": "已存在/冲突（技能已存在且未加 --upsert）",
+    "22": "前置条件不满足（目标位置已有同名、位置不可写、未挂载却取消）",
+    "30": "外部依赖不可用（git 提交失败等）"
+  },
+  "error_codes": [
+    "USAGE",
+    "INVALID_NAME",
+    "INVALID_FRONTMATTER",
+    "CONFIRM_REQUIRED",
+    "SKILL_NOT_FOUND",
+    "SKILL_EXISTS",
+    "TRASH_NOT_FOUND",
+    "ROOT_NOT_FOUND",
+    "ROOT_AMBIGUOUS",
+    "TARGET_EXISTS",
+    "ALREADY_LINKED",
+    "NOT_LINKED",
+    "COMMIT_NOT_FOUND",
+    "GIT_FAILED",
+    "INTERNAL"
+  ],
+  "roots_notation": {
+    "hub": "SKILL仓库（data/hub/skills）",
+    "global": "全局SKILL（~/.dsh/skills）",
+    "my-project": "工作区，等价于 ws:my-project（大小写不敏感，唯一匹配才接受）"
+  },
+  "skill_status": {
+    "unlinked": "在仓库、未挂载",
+    "linked": "已挂载到至少一个位置",
+    "local": "工作区里的未纳管实体",
+    "dead": "链接指向的目标已不存在"
+  },
+  "commands": [
+    {
+      "name": "list",
+      "summary": "列出技能",
+      "args": {
+        "--status": "unlinked | linked | local | dead",
+        "--group": "位置 key（hub / global / ws:my-project）",
+        "--pinned": "true | false",
+        "--sort": "name | time | size（默认 name）",
+        "--limit": "默认 50，上限 500",
+        "--offset": "默认 0"
+      },
+      "output": {
+        "items": "[skill]",
+        "next": "number|null"
+      }
+    },
+    {
+      "name": "get",
+      "summary": "单个技能详情",
+      "args": {
+        "name": "位置参数，必填"
+      },
+      "output": "skill 对象"
+    },
+    {
+      "name": "history",
+      "summary": "该技能的提交历史",
+      "args": {
+        "name": "位置参数，必填",
+        "--limit": "默认 20"
+      },
+      "output": {
+        "items": "[{commit, time, message}]",
+        "next": null
+      }
+    },
+    {
+      "name": "roots",
+      "summary": "可挂载位置清单",
+      "args": {},
+      "output": {
+        "items": "[{key, label, kind, path}]",
+        "hub": "string"
+      }
+    },
+    {
+      "name": "detect",
+      "summary": "检测全局与各工作区的技能（只扫一层，不递归）",
+      "mutating": false,
+      "args": [],
+      "output": [
+        "agent",
+        "rules",
+        "global",
+        "workspaces",
+        "counts"
+      ],
+      "exit_codes": [
+        0,
+        1,
+        3
+      ]
+    },
+    {
+      "name": "trash",
+      "summary": "回收站列表",
+      "args": {
+        "--limit": "默认 50"
+      },
+      "output": {
+        "items": "[{id, name, nameZh, deletedAt, daysLeft, sizeKb, links}]",
+        "next": null
+      }
+    },
+    {
+      "name": "schema",
+      "summary": "输出命令目录（本文件内容）",
+      "args": {
+        "--command": "只输出某个命令的定义"
+      },
+      "output": "spec"
+    },
+    {
+      "name": "create",
+      "summary": "校验后创建技能并归入仓库（默认未挂载）",
+      "args": {
+        "name": "位置参数，必填，^[a-z0-9][a-z0-9-]{0,63}$",
+        "--zh": "中文名，可选",
+        "--desc": "描述，必填",
+        "--content": "- | @file | 文件路径，可选；写入 SKILL.md 正文",
+        "--link": "可选，创建后立即挂载到该位置",
+        "--upsert": "已存在时覆盖元数据与正文",
+        "--yes": "必需"
+      },
+      "output": {
+        "name": "string",
+        "path": "string",
+        "status": "unlinked|linked",
+        "created": "boolean",
+        "commit": "string",
+        "links": "[string]",
+        "note": "string"
+      }
+    },
+    {
+      "name": "update",
+      "summary": "修改元数据或正文",
+      "args": {
+        "name": "位置参数，必填",
+        "--zh": "新中文名；传空串表示清空",
+        "--desc": "新描述",
+        "--content": "- | @file | 路径，写入正文",
+        "--yes": "必需"
+      },
+      "output": {
+        "name": "string",
+        "changed": "[string]",
+        "commit": "string"
+      }
+    },
+    {
+      "name": "link",
+      "summary": "把技能挂载到全局或某个工作区",
+      "args": {
+        "name": "位置参数",
+        "--to": "位置（hub 除外）",
+        "--yes": "必需"
+      },
+      "output": {
+        "name": "string",
+        "linked": true,
+        "to": "{key,label,path}",
+        "links": "[string]",
+        "commit": "string"
+      }
+    },
+    {
+      "name": "unlink",
+      "summary": "取消挂载（实体留在仓库）",
+      "args": {
+        "name": "位置参数",
+        "--from": "位置（省略则移除所有链接）",
+        "--yes": "必需"
+      },
+      "output": {
+        "name": "string",
+        "removed": "[string]",
+        "links": "[string]",
+        "commit": "string"
+      }
+    },
+    {
+      "name": "delete",
+      "summary": "删除单个技能，移入回收站并断开所有链接",
+      "args": {
+        "name": "位置参数",
+        "--yes": "必需"
+      },
+      "output": {
+        "name": "string",
+        "trashed": true,
+        "trashId": "string",
+        "removedLinks": "[string]",
+        "expiresInDays": "number"
+      }
+    },
+    {
+      "name": "restore",
+      "summary": "从回收站恢复到仓库",
+      "args": {
+        "id": "位置参数（trashId）",
+        "--yes": "必需"
+      },
+      "output": {
+        "name": "string",
+        "restored": true,
+        "trashId": "string",
+        "commit": "string"
+      }
+    },
+    {
+      "name": "purge",
+      "summary": "彻底删除回收站条目",
+      "args": {
+        "id": "位置参数",
+        "--yes": "必需"
+      },
+      "output": {
+        "id": "string",
+        "purged": true
+      }
+    },
+    {
+      "name": "validate",
+      "summary": "校验技能格式",
+      "args": {
+        "name": "位置参数，可选；省略等同 --all",
+        "--all": "校验全部"
+      },
+      "output": {
+        "checked": "number",
+        "problems": "[{name, field, message}]",
+        "ok": "boolean"
+      }
+    },
+    {
+      "name": "audit",
+      "summary": "静态审查技能内容：prompt-injection / credential-read / dangerous-shell / obfuscation / dynamic-exec。启发式，不是安全保证。",
+      "args": {
+        "name": "位置参数，可选；省略则检查全部",
+        "--limit": "最多检查几个"
+      },
+      "output": {
+        "checked": "number",
+        "risk": "none|low|medium|high",
+        "findings": "[{name, category, severity, file, line, snippet}]",
+        "disclaimer": "string"
+      }
+    },
+    {
+      "name": "diff",
+      "summary": "对比某个提交与当前内容的差异（只读）",
+      "args": {
+        "name": "位置参数",
+        "--commit": "提交 sha（前 8 位即可）"
+      },
+      "output": {
+        "name": "string",
+        "commit": "string",
+        "changed": "[string]",
+        "stats": {
+          "added": "number",
+          "removed": "number"
+        },
+        "diff": "string"
+      }
+    },
+    {
+      "name": "rollback",
+      "summary": "把技能内容恢复到某个提交（生成新提交，不 reset）",
+      "args": {
+        "name": "位置参数",
+        "--commit": "提交 sha",
+        "--yes": "必需"
+      },
+      "output": {
+        "name": "string",
+        "rolledBackTo": "string",
+        "newCommit": "string",
+        "changed": "[string]"
+      }
+    },
+    {
+      "name": "recover",
+      "summary": "从 git 历史把已删除（含回收站已清空）的技能恢复回仓库；技能当前必须不存在",
+      "args": {
+        "name": "位置参数",
+        "--commit": "提交 sha（该提交里要有 skills/<name>/）",
+        "--yes": "必需"
+      },
+      "output": {
+        "name": "string",
+        "path": "string",
+        "recoveredFrom": "string",
+        "newCommit": "string",
+        "files": "[string]",
+        "status": "unlinked"
+      }
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+# 运行时数据（技能实体、manifest、回收站、配置）——不进仓库
+data/
+logs/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 编辑器与系统
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+
+# 临时与备份
+*.log
+*.tmp
+*.bak
+臨時/
+临时/
+
+# 内部设计笔记（含个人路径，不进公开仓库）
+docs/设计与计划.md
+交接文档.md
+# 内部文档（含本机路径与工作记录，不进公开仓库）
+交接说明.md
+开源清单.md
