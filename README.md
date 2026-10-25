@@ -132,6 +132,8 @@ Copy-Item "D:\Projects\my-project\.dsh\skills" "D:\Projects\my-project\.dsh\skil
 
 出问题就把备份拷回去，覆盖掉被改动的目录。
 
+不会敲命令也没关系——直接跟你的 AI 助手说「帮我把技能目录备份一份」，让它来做也一样。
+
 ---
 
 ## 核心概念
