@@ -6,6 +6,10 @@
 
 首个开源版本。
 
+### 修复
+
+- 全新安装（仓库尚未初始化 git）时，`skill history` 返回 `INTERNAL` 而非 `SKILL_NOT_FOUND`
+
 ### 新增
 
 - 技能仓库：实体层（`data/hub/skills`）与链接层（工作区 / 全局的 `.dsh/skills`）分离
