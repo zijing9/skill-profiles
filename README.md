@@ -112,6 +112,26 @@ python app.py
 
 纳管时会做四件事：复制进仓库 → 校验完整性 → 删原目录 → 在原位置建链接。任何一步失败都会回滚。
 
+### 第一次用之前，先备份
+
+这个工具会对你的技能目录做**移动和建立链接**的操作：
+
+- **纳管**已有技能：复制进仓库 → 校验 → 删除原目录 → 在原位置建链接
+- **删除**技能：移进回收站，保留 10 天
+- **移动**技能：断开原位置的链接，在新位置重建
+
+每一步都有回滚，但谁也不能保证没有 bug。**第一次用之前，把现有的 skills 目录整体复制一份**，最稳妥：
+
+```powershell
+# 备份全局技能（DeepSeek Harness 为例，其他工具换成对应目录）
+Copy-Item "$env:USERPROFILE\.dsh\skills" "$env:USERPROFILE\skills-backup-$(Get-Date -Format yyyyMMdd)" -Recurse
+
+# 备份工作站点的技能（把路径换成你的工作区）
+Copy-Item "D:\Projects\my-project\.dsh\skills" "D:\Projects\my-project\.dsh\skills-backup" -Recurse
+```
+
+出问题就把备份拷回去，覆盖掉被改动的目录。
+
 ---
 
 ## 核心概念
