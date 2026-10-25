@@ -449,7 +449,15 @@ def get_entry(name: str) -> dict:
 
 # ---------------- git ----------------
 def git_repo():
+    """打开 hub 的 git 仓库；不存在时报明确的错误而不是裸异常。"""
     from dulwich.repo import Repo
+    if not (HUB / ".git").exists():
+        raise CliError(
+            "GIT_FAILED",
+            "仓库还没初始化",
+            "先执行任意写操作（如 skill create）或 skill list 触发初始化",
+            EX_EXTERNAL,
+        )
     return Repo(str(HUB))
 
 
@@ -497,7 +505,10 @@ def commit_skill_files(commit, name: str) -> dict:
 
 
 def commit_history_for(name: str, limit: int = 20) -> list:
-    repo = git_repo()
+    try:
+        repo = git_repo()
+    except CliError:
+        return []
     out = []
     for entry in repo.get_walker():
         c = entry.commit
