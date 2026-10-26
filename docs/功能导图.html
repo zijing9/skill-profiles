@@ -1,0 +1,184 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1700px;height:960px;background:#0a0a0a;font-family:"Microsoft YaHei","Segoe UI",system-ui,sans-serif}
+svg{display:block}
+.t2{font-size:17px;font-weight:700;fill:#f0f0f0}
+.t{font-size:14.5px;font-weight:600;fill:#e6e6e6}
+.s{font-size:12.5px;fill:#8a8a8a}
+.s2{font-size:11.5px;fill:#6f6f6f}
+.cmd{font-family:Consolas,monospace;font-size:11.5px;fill:#f0a742}
+.cmdg{font-family:Consolas,monospace;font-size:11.5px;fill:#78bd84}
+.lbl{font-size:11.5px;fill:#6a6a6a}
+.lblg{font-size:11.5px;fill:#5f9e6a}
+.zone{font-size:11.5px;fill:#4e4e4e;letter-spacing:3px}
+</style></head><body>
+
+<svg width="1700" height="960" viewBox="0 0 1700 960" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0.5 L7,4 L0,7.5 z" fill="#6a6a6a"/></marker>
+    <marker id="ao" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0.5 L7,4 L0,7.5 z" fill="#f0a742"/></marker>
+    <marker id="ag" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0.5 L7,4 L0,7.5 z" fill="#5f9e6a"/></marker>
+    <marker id="ab" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0.5 L7,4 L0,7.5 z" fill="#4d7ba8"/></marker>
+  </defs>
+
+  <!-- 分区 -->
+  <rect x="20" y="20" width="890" height="920" rx="14" fill="#0f0f0f" stroke="#1a1a1a"/>
+  <text x="46" y="48" class="zone">本 地</text>
+
+  <rect x="1030" y="20" width="650" height="920" rx="14" fill="#0b120d" stroke="#1b2b1f"/>
+  <text x="1056" y="48" class="zone">G I T H U B</text>
+
+  <!-- ===== 人 ===== -->
+  <rect x="330" y="72" width="270" height="70" rx="11" fill="#191919" stroke="#303030"/>
+  <text x="465" y="102" text-anchor="middle" class="t2">你</text>
+  <text x="465" y="124" text-anchor="middle" class="s">点界面 · 敲命令 · 跟 agent 说</text>
+
+  <line x1="420" y1="142" x2="420" y2="196" stroke="#444" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="408" y="172" text-anchor="end" class="lbl">提需求</text>
+
+  <!-- ===== AI agent ===== -->
+  <rect x="170" y="198" width="500" height="112" rx="13" fill="#0d141c" stroke="#2d5684"/>
+  <text x="420" y="228" text-anchor="middle" class="t2">AI agent（DSH / Claude Code / Codex …）</text>
+  <text x="420" y="252" text-anchor="middle" class="s">读技能 · 执行命令 · 调外部工具</text>
+  <text x="420" y="274" text-anchor="middle" class="s2">它自己不连 GitHub，靠下面两条路</text>
+  <rect x="238" y="284" width="150" height="20" rx="10" fill="none" stroke="#2d5684" opacity="0.7"/>
+  <text x="313" y="298" text-anchor="middle" class="s2">① 调 skill.py</text>
+  <rect x="452" y="284" width="180" height="20" rx="10" fill="none" stroke="#2d5684" opacity="0.7"/>
+  <text x="542" y="298" text-anchor="middle" class="s2">② 调 gh / git</text>
+
+  <!-- agent → skill.py -->
+  <line x1="290" y1="310" x2="290" y2="404" stroke="#4a4a4a" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="278" y="352" text-anchor="end" class="cmd">skill list</text>
+  <text x="278" y="370" text-anchor="end" class="cmd">skill create</text>
+
+  <!-- agent → gh / git -->
+  <line x1="560" y1="310" x2="560" y2="404" stroke="#5f9e6a" stroke-width="1.6" marker-end="url(#ag)"/>
+  <text x="574" y="348" class="cmdg">gh release create</text>
+  <text x="574" y="366" class="cmdg">git push</text>
+
+  <!-- ===== 工具层 ===== -->
+  <rect x="150" y="406" width="280" height="104" rx="11" fill="#1b1610" stroke="#f0a742" stroke-opacity="0.5"/>
+  <text x="290" y="434" text-anchor="middle" class="t">skill.py</text>
+  <text x="290" y="456" text-anchor="middle" class="s">管技能：建 / 改 / 挂载 / 删</text>
+  <text x="290" y="477" text-anchor="middle" class="s2">19 条命令 · JSON 输出</text>
+  <text x="290" y="496" text-anchor="middle" class="s2" fill="#c8873a">不 联 网</text>
+
+  <rect x="450" y="406" width="180" height="104" rx="11" fill="#101710" stroke="#2f6b3a"/>
+  <text x="540" y="434" text-anchor="middle" class="t">git</text>
+  <text x="540" y="456" text-anchor="middle" class="s">代码版本</text>
+  <text x="540" y="477" text-anchor="middle" class="s2">commit / push</text>
+  <text x="540" y="496" text-anchor="middle" class="s2">clone</text>
+
+  <rect x="650" y="406" width="180" height="104" rx="11" fill="#0f1a12" stroke="#2f6b3a"/>
+  <text x="740" y="434" text-anchor="middle" class="t">gh CLI</text>
+  <text x="740" y="456" text-anchor="middle" class="s">操作 GitHub</text>
+  <text x="740" y="477" text-anchor="middle" class="s2">仓库 · Release</text>
+  <text x="740" y="496" text-anchor="middle" class="s2">Issue · PR · API</text>
+
+  <!-- skill.py → hub -->
+  <line x1="290" y1="510" x2="290" y2="580" stroke="#4a4a4a" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="278" y="550" text-anchor="end" class="lbl">读写</text>
+
+  <!-- git → hub -->
+  <path d="M 540 510 L 540 544 L 420 544 L 420 580" fill="none" stroke="#4a4a4a" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="480" y="536" text-anchor="middle" class="s2">提交到 hub 的 .git</text>
+
+  <!-- ===== 数据层 ===== -->
+  <rect x="150" y="582" width="280" height="92" rx="11" fill="#1b1610" stroke="#f0a742"/>
+  <text x="290" y="610" text-anchor="middle" class="t">data/hub/skills/</text>
+  <text x="290" y="632" text-anchor="middle" class="s">技能真身 · 唯一一份</text>
+  <text x="290" y="653" text-anchor="middle" class="s2">带 .git 历史</text>
+
+  <rect x="470" y="582" width="240" height="92" rx="11" fill="#141414" stroke="#303030"/>
+  <text x="590" y="610" text-anchor="middle" class="t">~/.dsh/skills/ 等</text>
+  <text x="590" y="632" text-anchor="middle" class="s">各 agent 的入口目录</text>
+  <text x="590" y="653" text-anchor="middle" class="s2">里面是指向 hub 的链接</text>
+
+  <line x1="430" y1="628" x2="470" y2="628" stroke="#4a4a4a" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="450" y="618" text-anchor="middle" class="s2">链接</text>
+
+  <!-- 入口目录 → agent（虚线） -->
+  <path d="M 590 582 L 590 558 L 900 558 L 900 344 L 674 344" fill="none" stroke="#3b6ea5" stroke-width="1.3"
+        stroke-dasharray="5,4" marker-end="url(#ab)" opacity="0.8"/>
+  <text x="905" y="450" class="lbl" fill="#5b8bbd" transform="rotate(-90 905 450)">agent 启动时读这里</text>
+
+  <!-- ===== 通道标注 ===== -->
+  <text x="960" y="60" text-anchor="middle" class="lbl" transform="rotate(90 960 60)" opacity="0">.</text>
+
+  <!-- ===== GitHub 侧 ===== -->
+  <rect x="1070" y="76" width="570" height="118" rx="12" fill="#101a12" stroke="#2f6b3a"/>
+  <text x="1355" y="106" text-anchor="middle" class="t2">仓库 zijing9/skill-profiles</text>
+  <text x="1355" y="130" text-anchor="middle" class="s">代码 · 文档 · 提交历史（17 个 commit）</text>
+  <text x="1355" y="152" text-anchor="middle" class="s2">可见性 Public · 823 KB</text>
+  <text x="1355" y="176" text-anchor="middle" class="s2" fill="#5f9e6a">这是「工具的代码」</text>
+
+  <rect x="1070" y="222" width="570" height="86" rx="11" fill="#101a12" stroke="#2f6b3a"/>
+  <text x="1096" y="250" class="t">Releases</text>
+  <text x="1096" y="272" class="s">v1.0.0 · skill-profiles-1.0.0-20261026.zip</text>
+  <text x="1096" y="292" class="s2">888 KB，别人下载这个安装</text>
+  <text x="1614" y="272" text-anchor="end" class="cmdg">gh release create</text>
+
+  <rect x="1070" y="330" width="570" height="86" rx="11" fill="#101a12" stroke="#2f6b3a"/>
+  <text x="1096" y="358" class="t">Issues</text>
+  <text x="1096" y="380" class="s">别人报的 bug / 功能建议</text>
+  <text x="1096" y="400" class="s2">模板已放在 .github/ISSUE_TEMPLATE/</text>
+  <text x="1614" y="380" text-anchor="end" class="cmdg">gh issue list</text>
+
+  <rect x="1070" y="438" width="570" height="86" rx="11" fill="#101a12" stroke="#2f6b3a"/>
+  <text x="1096" y="466" class="t">Pull requests</text>
+  <text x="1096" y="488" class="s">别人提交的代码改动</text>
+  <text x="1096" y="508" class="s2">你可以 review 后 merge</text>
+  <text x="1614" y="488" text-anchor="end" class="cmdg">gh pr merge</text>
+
+  <rect x="1070" y="546" width="570" height="86" rx="11" fill="#101a12" stroke="#2f6b3a"/>
+  <text x="1096" y="574" class="t">REST / GraphQL API</text>
+  <text x="1096" y="596" class="s">gh 底层调的就是它，也可以用 curl 直接调</text>
+  <text x="1096" y="616" class="s2">仓库设置、可见性、协作者、Actions …</text>
+  <text x="1614" y="596" text-anchor="end" class="cmdg">gh api</text>
+
+  <!-- 说明框 -->
+  <rect x="1070" y="660" width="570" height="150" rx="12" fill="#0d130e" stroke="#2a3a2c" stroke-dasharray="6,5"/>
+  <text x="1355" y="690" text-anchor="middle" class="t" fill="#8d9d8d">这里没有任何技能文件</text>
+  <text x="1355" y="716" text-anchor="middle" class="s2">data/ 在 .gitignore 里，从不上传</text>
+  <text x="1355" y="738" text-anchor="middle" class="s2">别人下载工具后，技能建在他自己电脑上</text>
+  <text x="1355" y="762" text-anchor="middle" class="s2">两边完全隔离，互不影响</text>
+  <text x="1355" y="790" text-anchor="middle" class="s2" fill="#7a8a7a">你的 11 个技能，GitHub 上一个都看不到</text>
+
+  <!-- 图例 -->
+  <rect x="1070" y="830" width="570" height="90" rx="12" fill="#0e0e0e" stroke="#242424"/>
+  <text x="1096" y="856" class="t">两条对外链路，互不越界</text>
+  <text x="1096" y="880" class="cmdg">gh CLI</text>
+  <text x="1160" y="880" class="s">→ GitHub 的「事」：发版、看 issue、提 PR、改设置</text>
+  <text x="1096" y="904" class="cmd">git</text>
+  <text x="1160" y="904" class="s">→ GitHub 的「代码」：commit / push / clone</text>
+
+  <!-- ===== 跨区连线 ===== -->
+  <!-- git → 仓库：从 git 框顶部绕出，越过 gh 框，走 x=985 通道 -->
+  <path d="M 540 406 L 540 382 L 985 382 L 985 135 L 1070 135" fill="none" stroke="#5f9e6a" stroke-width="1.8" marker-end="url(#ag)"/>
+  <text x="1000" y="300" class="lblg" transform="rotate(-90 1000 300)">git push / clone（HTTPS）</text>
+
+  <!-- gh → 各块（走 x=1005 总线） -->
+  <path d="M 830 470 L 1005 470 L 1005 265 L 1070 265" fill="none" stroke="#f0a742" stroke-width="1.5" marker-end="url(#ao)"/>
+  <path d="M 1005 265 L 1005 373 L 1070 373" fill="none" stroke="#f0a742" stroke-width="1.4" marker-end="url(#ao)" opacity="0.85"/>
+  <path d="M 1005 373 L 1005 481 L 1070 481" fill="none" stroke="#f0a742" stroke-width="1.4" marker-end="url(#ao)" opacity="0.7"/>
+  <path d="M 1005 481 L 1005 589 L 1070 589" fill="none" stroke="#f0a742" stroke-width="1.4" marker-end="url(#ao)" opacity="0.55"/>
+  <text x="1016" y="240" class="lbl" fill="#c8954a" transform="rotate(-90 1016 240)">gh 总线</text>
+
+  <!-- 左下：一次改动，处处生效 -->
+  <rect x="150" y="712" width="560" height="150" rx="12" fill="#0d0d0d" stroke="#232323"/>
+  <text x="176" y="742" class="t">改一个技能，所有挂载点同时生效</text>
+  <text x="176" y="768" class="s2">1. 你在界面里改 data/hub/skills/pdf-reader/SKILL.md</text>
+  <text x="176" y="790" class="s2">2. 这次改动自动提交一条 git（可回滚）</text>
+  <text x="176" y="812" class="s2">3. DSH / Claude Code / Codex 下次读到的都是新版</text>
+  <text x="176" y="838" class="s2" fill="#7f7f7f">—— 它们读的是同一个文件，只是入口不同</text>
+  <text x="176" y="858" class="lbl" fill="#5f9e6a">没有复制，没有同步，改一处就够</text>
+
+  <!-- 标题 -->
+  <text x="24" y="944" class="lbl">橙色 = 本项目的工具（不联网）　绿色 = 操作 GitHub 的两条路　蓝色 = agent 读技能的路径</text>
+
+</svg>
+</body></html>
