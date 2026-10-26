@@ -43,7 +43,7 @@ data/hub/skills/example-skill/     ← 真身（唯一）
 | **多工具支持** | 6 家主流工具，自动探测目录（含环境变量） |
 | **内容审计** | `skill audit` 检查提示词注入、危险命令、凭据外发 |
 | **中英双语** | 界面右上角切换 |
-| **命令行** | 18 条命令，JSON 输出，agent 可直接调用 |
+| **命令行** | 19 条命令，JSON 输出，agent 可直接调用 |
 
 ---
 
@@ -198,7 +198,7 @@ python cli\skill.py history my-skill
 python cli\skill.py rollback my-skill --commit 1a2b3c4d --yes
 ```
 
-18 条命令，默认输出 JSON，写操作要 `--yes`，都支持 `--dry-run`。
+19 条命令，默认输出 JSON，写操作要 `--yes`，都支持 `--dry-run`。
 
 **agent 可以直接调用**：完整契约见 [cli/cli.spec.json](cli/cli.spec.json)，用法见 [cli/README.md](cli/README.md)。
 

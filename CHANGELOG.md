@@ -13,6 +13,8 @@
 
 ### 修复
 
+- 中文名技能无法用 CLI 操作：`history` / `link` / `unlink` / `delete` / `diff` / `rollback` / `recover` / `validate` 全部报 `INVALID_NAME`
+  —— 创建时仍强制英文名，但引用已有技能改用宽松校验（仅防路径穿越）
 - 全新安装（仓库尚未初始化 git）时，`skill history` 返回 `INTERNAL` 而非 `SKILL_NOT_FOUND`
 
 ### 新增

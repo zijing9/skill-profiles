@@ -31,6 +31,31 @@ def parse(s):
         return None
 
 
+class TestNames(unittest.TestCase):
+    """技能名的校验边界：创建严格，引用宽松。"""
+
+    def test_create_rejects_chinese(self):
+        code, out, err = run("create", "中文名", "--yes")
+        self.assertEqual(code, 2)
+        self.assertEqual(parse(err)["error"]["code"], "INVALID_NAME")
+
+    def test_cn_name_accepted_for_read(self):
+        """已有中文名技能要能被查询（不能因英文名校验被拦）。"""
+        code, out, err = run("history", "本地工具开发手册")
+        # 允许 0（有记录）或 20（无记录），但不能是 2（校验失败）
+        self.assertIn(code, (0, 20))
+
+    def test_cn_name_accepted_for_get(self):
+        code, out, err = run("get", "本地工具开发手册")
+        self.assertIn(code, (0, 20))
+
+    def test_path_traversal_still_blocked(self):
+        for bad in ("../etc", "..", ".", "a/b", "a\\b"):
+            code, out, err = run("history", bad)
+            self.assertEqual(code, 2, f"{bad} 应被拒绝")
+            self.assertEqual(parse(err)["error"]["code"], "INVALID_NAME")
+
+
 class TestReadOnly(unittest.TestCase):
     def test_schema_has_all_commands(self):
         code, out, _ = run("schema")

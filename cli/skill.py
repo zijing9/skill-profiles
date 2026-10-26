@@ -298,6 +298,31 @@ def check_name(name: str):
     return n
 
 
+def check_existing_name(name: str):
+    """引用已存在的技能：允许中文等任意字符，只防路径穿越。
+
+    创建时要用 check_name（强制英文名），但读写已有技能时不该拦中文名。
+    """
+    n = (name or "").strip()
+    bad = (
+        not n
+        or len(n) > NAME_MAX
+        or "/" in n
+        or "\\" in n
+        or n in (".", "..")
+        or ".." in n
+        or n.startswith(".")
+    )
+    if bad:
+        raise CliError(
+            "INVALID_NAME",
+            f"技能名「{name}」不合法",
+            "名字不能为空、不能含路径分隔符或 ..",
+            EX_USAGE,
+        )
+    return n
+
+
 def dir_stats(path: Path):
     n = 0
     total = 0
@@ -639,7 +664,7 @@ def cmd_get(args):
 
 
 def cmd_history(args):
-    name = check_name(args.name)
+    name = check_existing_name(args.name)
     items = commit_history_for(name, int(args.limit or 20))
     if not items:
         raise CliError(
@@ -955,7 +980,7 @@ def cmd_update(args):
 
 
 def cmd_link(args):
-    name = check_name(args.name)
+    name = check_existing_name(args.name)
     entry = get_entry(name)
     root = resolve_root(args.to, allow_hub=False)
     dst = HUB / "skills" / name
@@ -982,7 +1007,7 @@ def cmd_link(args):
 
 
 def cmd_unlink(args):
-    name = check_name(args.name)
+    name = check_existing_name(args.name)
     entry = get_entry(name)
     targets = []
     if args.from_:
@@ -1016,7 +1041,7 @@ def cmd_unlink(args):
 
 
 def cmd_delete(args):
-    name = check_name(args.name)
+    name = check_existing_name(args.name)
     entry = get_entry(name)
     dst = HUB / "skills" / name
     removed = []
@@ -1078,7 +1103,7 @@ def cmd_restore(args):
         meta = {}
     name = (meta.get("name") or src.name.split("__")[0]).strip()
     try:
-        check_name(name)
+        check_existing_name(name)
     except CliError:
         pass
     origin = (meta.get("agent") or "").strip() or load_config().get("activeAgent") or "dsh"
@@ -1122,7 +1147,7 @@ def cmd_validate(args):
         dst = Path(e["path"])
         if dst.parent == HUB / "skills":
             try:
-                check_name(n)
+                check_existing_name(n)
             except CliError as ex:
                 problems.append({"name": n, "field": "name", "message": ex.message})
         fm = scanner.read_frontmatter(dst / "SKILL.md")
@@ -1150,7 +1175,7 @@ def cmd_validate(args):
 
 
 def cmd_diff(args):
-    name = check_name(args.name)
+    name = check_existing_name(args.name)
     get_entry(name)
     commit = find_commit(args.commit)
     files = commit_skill_files(commit, name)
@@ -1179,7 +1204,7 @@ def cmd_diff(args):
 
 def cmd_recover(args):
     """从 git 历史把某个已不存在的技能恢复回仓库。"""
-    name = check_name(args.name)
+    name = check_existing_name(args.name)
     commit = find_commit(args.commit)
     files = commit_skill_files(commit, name)
     dst = HUB / "skills" / name
@@ -1212,7 +1237,7 @@ def cmd_recover(args):
 
 
 def cmd_rollback(args):
-    name = check_name(args.name)
+    name = check_existing_name(args.name)
     get_entry(name)
     commit = find_commit(args.commit)
     files = commit_skill_files(commit, name)
