@@ -64,3 +64,13 @@ docs: README 改写成对外版本
 ## 许可证
 
 提交 PR 即表示你同意以 [MIT](LICENSE) 授权你的贡献。
+## 发布打包
+
+```powershell
+.\make-release.ps1
+```
+
+生成 `dist/skill-profiles-<版本>-<日期>.zip`，自动排除 `data/`、`logs/`、`.git/`
+和内部文档，只放一个示例技能。`-WithRuntime` 可连 Python 运行时一起打包。
+
+**发版前检查**：解压产物，确认里面没有你自己的技能和配置。

@@ -6,6 +6,11 @@
 
 首个开源版本。
 
+### 其他
+
+- 新增发布打包脚本 `make-release.ps1`：生成不含个人数据的分发包
+- 新增 GitHub Issue 模板（bug 报告 / 功能建议）
+
 ### 修复
 
 - 全新安装（仓库尚未初始化 git）时，`skill history` 返回 `INTERNAL` 而非 `SKILL_NOT_FOUND`

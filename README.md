@@ -74,6 +74,7 @@ agent 页面，把其中一份拖过去——这样同一个 skill 就能给不�
 |---|---|
 | 系统 | **Windows 10 / 11**（用到了 NTFS 目录链接，暂不支持 macOS/Linux） |
 | Python | 3.9 或更高 |
+| 依赖 | 版本已锁定，见 [requirements.txt](requirements.txt)（开发与验证使用 Flask 3.1.3 / dulwich 1.2.19 / pywebview 6.2.1） |
 | WebView2 | Windows 10/11 已内置；旧系统需[单独安装](https://developer.microsoft.com/microsoft-edge/webview2/) |
 
 ---
@@ -90,6 +91,8 @@ cd skill-profiles
 # 或者手动
 pip install -r requirements.txt
 ```
+
+不想用 git 的话，在仓库页点 **Code → Download ZIP**，解压后同样执行 `install.ps1`。
 
 `install.ps1` 会检查 Python 版本、装依赖、验证三个包能否 import。加 `-AddToPath` 可把 `skill` 命令加进 PATH。
 
