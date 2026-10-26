@@ -169,6 +169,8 @@ Copy-Item "D:\Projects\my-project\.dsh\skills" "D:\Projects\my-project\.dsh\skil
 
 工作区的判定和目录名无关——只看「子目录里有没有 `<工具>/skills`」。
 
+想看这几个概念之间的关系（GitHub / 工具 / 仓库 / agent），见 [docs/关系图.md](docs/关系图.md)。
+
 ---
 
 ## 支持的工具
