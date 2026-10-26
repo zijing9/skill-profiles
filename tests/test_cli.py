@@ -41,12 +41,12 @@ class TestNames(unittest.TestCase):
 
     def test_cn_name_accepted_for_read(self):
         """已有中文名技能要能被查询（不能因英文名校验被拦）。"""
-        code, out, err = run("history", "本地工具开发手册")
+        code, out, err = run("history", "中文测试技能")
         # 允许 0（有记录）或 20（无记录），但不能是 2（校验失败）
         self.assertIn(code, (0, 20))
 
     def test_cn_name_accepted_for_get(self):
-        code, out, err = run("get", "本地工具开发手册")
+        code, out, err = run("get", "中文测试技能")
         self.assertIn(code, (0, 20))
 
     def test_path_traversal_still_blocked(self):

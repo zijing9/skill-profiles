@@ -22,7 +22,7 @@ python cli/skill.py list --status unlinked
 python cli/skill.py create my-skill --zh 中文名 --desc "什么时候用这个技能" --content @body.md --link global --yes
 ```
 
-命令速查看 `skill-cli` 技能（已挂到全局）；完整契约看 `cli/cli.spec.json` 与 `cli/README.md`。
+命令速查看 `skill-cli` 技能（如果已挂载）；完整契约看 `cli/cli.spec.json` 与 `cli/README.md`。
 
 ## 改代码
 

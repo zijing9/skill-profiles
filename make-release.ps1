@@ -39,10 +39,25 @@ New-Item -ItemType Directory -Path $Stage -Force | Out-Null
 # ---------- 2) 复制（排除个人数据） ----------
 $excludeDirs = @("data", "logs", ".git", "__pycache__", "dist", "臨時", ".venv", "venv")
 $excludeFiles = @("*.pyc", "*.log", ".env")
+
 # 内部文档：含本机路径与开发记录，不进分发包
 $excludeNames = @("交接说明.md", "开源清单.md", "说明.txt")
 
-Write-Host "==> 复制文件（排除 data/ logs/ .git/ 内部文档）" -ForegroundColor Cyan
+# 再从 .gitignore 里取所有「具体文件名 / 目录名」（不含通配符）一并排除，
+# 避免以后往 .gitignore 里加文件时忘记同步到本脚本。
+if (Test-Path (Join-Path $Root ".gitignore")) {
+    Get-Content (Join-Path $Root ".gitignore") -Encoding UTF8 | ForEach-Object {
+        $line = $_.Trim()
+        if ($line -and -not $line.StartsWith("#") -and $line -notmatch '[*?[]') {
+            $clean = $line.Trim("/")
+            if ($clean -and $clean -notin $excludeDirs -and $clean -notin $excludeNames) {
+                $excludeNames += $clean
+            }
+        }
+    }
+}
+
+Write-Host "==> 复制文件（排除 data/ logs/ .git/ 及 .gitignore 列出的内部文件）" -ForegroundColor Cyan
 Get-ChildItem -Path $Root -Force | Where-Object {
     $_.Name -notin $excludeDirs -and $_.Name -notin $excludeNames -and $_.Name -notlike "dist"
 } | ForEach-Object {
@@ -58,6 +73,15 @@ Get-ChildItem -Path $Stage -Recurse -Directory -Filter "__pycache__" -ErrorActio
     Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
 Get-ChildItem -Path $Stage -Recurse -File -Include "*.pyc" -ErrorAction SilentlyContinue |
     Remove-Item -Force -ErrorAction SilentlyContinue
+
+# 按 .gitignore 里的具体路径再删一遍（处理 docs/xxx.md 这种带子目录的条目）
+foreach ($item in $excludeNames) {
+    $target = Join-Path $Stage $item
+    if (Test-Path $target) {
+        Remove-Item $target -Recurse -Force -ErrorAction SilentlyContinue
+        Write-Host "    已排除：$item" -ForegroundColor DarkGray
+    }
+}
 
 # ---------- 3) 放入示例技能 ----------
 Write-Host "==> 放入示例技能" -ForegroundColor Cyan
